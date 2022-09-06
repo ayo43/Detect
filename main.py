@@ -44,7 +44,8 @@ encodeListKnown = findEncodings(images)
 
 # print('Encodings Complete')
 
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('rtsp://admin:123456789@192.168.93.79:8080/h264_ulaw.sdp')
 
 while True:
     success, img = cap.read()
