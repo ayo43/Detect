@@ -36,7 +36,7 @@ def markAttendance(name):
             nameList.append(entry[0])
         if name not in nameList:
             now = datetime.now()
-            dt_string = now.strftime("%H:%M:%S")
+            dt_string = now.strftime("%m/%d/%Y, %H:%M:%S")
             f.writelines(f'\n{name},{dt_string}')
 
 
@@ -44,8 +44,11 @@ encodeListKnown = findEncodings(images)
 
 # print('Encodings Complete')
 
-#cap = cv2.VideoCapture(0)
-cap = cv2.VideoCapture('rtsp://admin:123456789@192.168.93.79:8080/h264_ulaw.sdp')
+cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture('rtsp://admin:123456789@192.168.93.79:8080/h264_ulaw.sdp')
+
+#fourcc = cv2.VideoWriter_fourcc('X','V','I','D')
+#videoWriter = cv2.VideoWriter(r'C:\Users\ayok4\PycharmProjects\recorded.avi', fourcc, 30.0, (640,480))
 
 while True:
     success, img = cap.read()
@@ -67,6 +70,7 @@ while True:
             markAttendance(name)
         else:
             name = 'Unknown'
+            cv2.imwrite("framed.jpg", img)
             markAttendance(name)
         # print(name)
         y1, x2, y2, x1 = faceLoc
@@ -76,4 +80,5 @@ while True:
         cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
 
     cv2.imshow('webcam', img)
+    #videoWriter.write(img)
     cv2.waitKey(1)
